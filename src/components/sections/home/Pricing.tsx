@@ -1,146 +1,171 @@
-import { Check, Plus, AlertCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Check, Plus, MessageSquare, PenTool, Camera, Shield, MapPin } from 'lucide-react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default function Pricing() {
-  return (
-    <section id="tarifs" className="py-24 bg-waps-white text-waps-black relative overflow-hidden">
-      {/* Decorative Slant */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-waps-black -skew-y-2 origin-top-left translate-y-[-50%] z-0"></div>
+  
+  const packs = [
+    {
+      name: "Pack Vitrine",
+      price: "150.000",
+      description: "L'essentiel pour crédibiliser votre entreprise en ligne.",
+      features: [
+        "Site Web Pro (5 Pages max)",
+        "Nom de Domaine (.cm ou .com)",
+        "Hébergement Haute Vitesse",
+        "Adresses Emails Pros",
+        "Bouton WhatsApp Flottant (Offert)", // Moved to Free
+        "Intégration Google Maps (Offert)",  // Moved to Free
+        "Certificat de Sécurité SSL",
+        "Optimisation Mobile"
+      ],
+      isPopular: true,
+      cta: "COMMANDER CE PACK"
+    },
+    {
+      name: "Pack E-Commerce",
+      price: "Sur Devis",
+      description: "Pour vendre vos produits et encaisser des paiements.",
+      features: [
+        "Tout du Pack Vitrine",
+        "Catalogue Produits illimité",
+        "Paiement Mobile Money / Carte",
+        "Gestion des Stocks",
+        "Tableau de bord Ventes",
+        "Formation à la gestion",
+        "Campagne Pub Facebook offerte"
+      ],
+      isPopular: false,
+      cta: "DEMANDER UN DEVIS"
+    }
+  ]
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+  // The Add-ons (Upsells)
+  const addons = [
+    {
+      icon: PenTool,
+      title: "Création de Logo Pro",
+      price: "25.000 FCFA",
+      desc: "3 propositions de logos uniques + Charte graphique simplifiée."
+    },
+    {
+      icon: MessageSquare,
+      title: "Livechat Pro", // Changed from Google Maps to Livechat
+      price: "15.000 FCFA /mois",
+      desc: "Système de chat en direct avancé (type Tawk.to ou Intercom) pour votre équipe."
+    },
+    {
+      icon: Camera,
+      title: "Shooting Photo Pro",
+      price: "50.000 FCFA",
+      desc: "Déplacement d'un photographe pour shooter vos locaux/produits."
+    },
+    {
+      icon: Shield,
+      title: "Maintenance VIP",
+      price: "10.000 FCFA /mois",
+      desc: "Mises à jour illimitées de vos textes et images 7j/7."
+    }
+  ]
+
+  return (
+    <section id="tarifs" className="py-24 bg-gray-50 text-waps-black border-t border-gray-200">
+      <div className="container mx-auto px-4 lg:px-8">
+        
+        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tight">
-            Tarifs & <span className="text-waps-yellow bg-waps-black px-2">Options.</span>
+          <h2 className="text-3xl md:text-5xl font-black mb-6 uppercase tracking-tight text-waps-black">
+            Investissement <span className="text-waps-yellow bg-waps-black px-2">Clair.</span>
           </h2>
-          <p className="text-waps-gray text-lg">
-            Une offre claire pour démarrer. Des options pour grandir.
+          <p className="text-gray-600 text-lg">
+            Pas de frais cachés. Whatsapp et Google Maps sont inclus d'office.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto">
-          
-          {/* --- LEFT CARD: THE 150K PACK --- */}
-          <div className="bg-waps-black text-waps-white rounded-2xl p-8 md:p-12 shadow-2xl relative border border-waps-dark-gray flex flex-col h-full">
-            <div className="absolute top-0 right-0 bg-waps-yellow text-waps-black text-xs font-bold px-4 py-2 rounded-bl-xl rounded-tr-xl uppercase tracking-widest">
-              Best-Seller
-            </div>
-            
-            <h3 className="text-2xl font-bold mb-2">Pack Vitrine Pro</h3>
-            <div className="flex items-baseline gap-1 mb-6">
-              <span className="text-5xl font-black text-waps-yellow">150.000</span>
-              <span className="text-xl font-medium text-waps-gray">FCFA</span>
-            </div>
+        {/* Main Pricing Grid */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-24">
+          {packs.map((pack, index) => (
+            <div 
+              key={index} 
+              className={`relative p-8 md:p-12 rounded-3xl border transition-all duration-300 ${
+                pack.isPopular 
+                  ? 'bg-waps-black text-white border-waps-black shadow-2xl scale-105 z-10' 
+                  : 'bg-white text-waps-black border-gray-200 hover:border-waps-yellow shadow-lg'
+              }`}
+            >
+              {pack.isPopular && (
+                <div className="absolute top-0 right-0 bg-waps-yellow text-waps-black text-xs font-bold px-4 py-2 rounded-bl-xl rounded-tr-xl uppercase tracking-wider">
+                  Le Plus Populaire
+                </div>
+              )}
 
-            <p className="text-gray-400 mb-8 border-b border-gray-800 pb-8 text-sm">
-              Votre agence digitale complète. Idéal pour PME, Commerces et Consultants.
-            </p>
+              <h3 className="text-2xl font-bold mb-2">{pack.name}</h3>
+              <div className="flex items-baseline gap-1 mb-6">
+                <span className={`text-4xl md:text-5xl font-black ${pack.isPopular ? 'text-waps-yellow' : 'text-waps-black'}`}>
+                  {pack.price}
+                </span>
+                {pack.price !== "Sur Devis" && <span className="text-sm opacity-60">FCFA</span>}
+              </div>
+              <p className={`mb-8 ${pack.isPopular ? 'text-gray-400' : 'text-gray-500'}`}>
+                {pack.description}
+              </p>
 
-            <ul className="space-y-4 mb-10 flex-grow">
-              {[
-                "Site One-Page (Design Pro & Mobile)",
-                "Création Pages Réseaux Sociaux (FB/Insta)",
-                "2 Adresses Emails Pro",
-                "Nom de domaine (.cm/.com) offert 1 an",
-                "Hébergement Haute Performance inclus",
-                "Rédaction de vos textes (Copywriting)",
-                "Indexation Google (SEO de base)",
-                "Support Technique 30 jours"
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <div className="mt-1 min-w-[20px]">
-                    <Check className="w-5 h-5 text-waps-yellow" />
-                  </div>
-                  <span className="text-sm font-medium text-gray-200">{item}</span>
-                </li>
-              ))}
-            </ul>
+              <ul className="space-y-4 mb-10">
+                {pack.features.map((feature, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${pack.isPopular ? 'bg-white/10 text-waps-yellow' : 'bg-green-100 text-green-700'}`}>
+                      <Check size={14} strokeWidth={3} />
+                    </div>
+                    <span className="text-sm font-medium opacity-90">{feature}</span>
+                  </li>
+                ))}
+              </ul>
 
-            <div className="mt-auto">
-              <Button asChild className="w-full bg-waps-yellow text-waps-black hover:bg-white font-bold h-14 text-lg mb-4">
-                <Link href="#contact">COMMANDER (Acompte 50%)</Link>
+              <Button 
+                asChild
+                className={`w-full h-14 font-bold text-lg rounded-full transition-all ${
+                  pack.isPopular 
+                    ? 'bg-waps-yellow text-waps-black hover:bg-white' 
+                    : 'bg-waps-black text-white hover:bg-gray-800'
+                }`}
+              >
+                <Link href="/commencer">{pack.cta}</Link>
               </Button>
-              <p className="text-center text-xs text-gray-500">
-                Livraison garantie en 72h ouvrées après validation des contenus.
-              </p>
             </div>
-          </div>
-
-          {/* --- RIGHT CARD: THE OPTIONS (ADD-ONS) --- */}
-          <div className="bg-gray-50 text-waps-black rounded-2xl p-8 md:p-12 border border-gray-200 flex flex-col h-full">
-            <h3 className="text-2xl font-bold mb-2">Options & Bonus</h3>
-            <p className="text-gray-600 mb-8 text-sm border-b border-gray-200 pb-8">
-              Personnalisez votre pack selon vos besoins spécifiques.
-            </p>
-
-            <div className="space-y-6 flex-grow">
-              {/* Option 1: Bilingual */}
-              <div className="flex justify-between items-center border-b border-gray-200 pb-4">
-                <div>
-                  <div className="font-bold text-sm md:text-base">Site Bilingue (FR/EN)</div>
-                  <div className="text-xs text-gray-500">Traduction complète incluse</div>
-                </div>
-                <div className="font-black text-waps-black whitespace-nowrap">
-                  + 30.000 F
-                </div>
-              </div>
-
-              {/* Option 2: Live Chat */}
-              <div className="flex justify-between items-center border-b border-gray-200 pb-4">
-                <div>
-                  <div className="font-bold text-sm md:text-base">Live Chat</div>
-                  <div className="text-xs text-gray-500">WhatsApp / Tawk.to intégré</div>
-                </div>
-                <div className="font-black text-waps-black whitespace-nowrap">
-                  + 25.000 F
-                </div>
-              </div>
-
-              {/* Option 3: Videos */}
-              <div className="flex justify-between items-center border-b border-gray-200 pb-4">
-                <div>
-                  <div className="font-bold text-sm md:text-base">Intégration Vidéos</div>
-                  <div className="text-xs text-gray-500">Pack de 3 à 4 vidéos</div>
-                </div>
-                <div className="font-black text-waps-black whitespace-nowrap">
-                  + 5.000 F
-                </div>
-              </div>
-
-              {/* Option 4: Emails */}
-              <div className="flex justify-between items-center border-b border-gray-200 pb-4">
-                <div>
-                  <div className="font-bold text-sm md:text-base">Email Supplémentaire</div>
-                  <div className="text-xs text-gray-500">Par adresse / an</div>
-                </div>
-                <div className="font-black text-waps-black whitespace-nowrap">
-                  + 5.000 F
-                </div>
-              </div>
-
-               {/* Option 5: Custom Pages */}
-               <div className="flex justify-between items-center border-b border-gray-200 pb-4 bg-yellow-50/50 p-2 rounded">
-                <div>
-                  <div className="font-bold text-sm md:text-base">Pages Supplémentaires</div>
-                  <div className="text-xs text-gray-500">Fonctionnalités sur mesure</div>
-                </div>
-                <div className="font-black text-waps-dark-gray whitespace-nowrap text-sm bg-waps-yellow/20 px-2 py-1 rounded">
-                  Sur Devis
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 flex gap-3 items-start">
-              <div className="min-w-[20px] pt-1">
-                 <AlertCircle className="w-5 h-5 text-waps-gray" />
-              </div>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                <strong>Note :</strong> Le renouvellement annuel (Nom de domaine + Hébergement) est facturé à 50.000 FCFA à partir de la 2ème année.
-              </p>
-            </div>
-          </div>
-
+          ))}
         </div>
+
+        {/* --- ADDITIONAL SERVICES --- */}
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-4 mb-10">
+             <div className="h-px bg-gray-300 flex-grow"></div>
+             <h3 className="text-2xl font-bold uppercase tracking-tight text-gray-400">
+               Options à la carte
+             </h3>
+             <div className="h-px bg-gray-300 flex-grow"></div>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
+             {addons.map((addon, index) => (
+                <div key={index} className="bg-white p-6 rounded-2xl border border-gray-100 hover:border-waps-yellow/50 hover:shadow-lg transition-all group">
+                   <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-waps-black group-hover:text-waps-yellow transition-colors">
+                      <addon.icon size={24} />
+                   </div>
+                   <h4 className="font-bold text-lg mb-1">{addon.title}</h4>
+                   <p className="text-waps-yellow font-bold text-sm mb-3">{addon.price}</p>
+                   <p className="text-gray-500 text-xs leading-relaxed">
+                      {addon.desc}
+                   </p>
+                   <div className="mt-4 pt-4 border-t border-gray-50 flex justify-end">
+                      <Link href="/commencer" className="text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                         <Plus size={12} /> Ajouter
+                      </Link>
+                   </div>
+                </div>
+             ))}
+          </div>
+        </div>
+
       </div>
     </section>
   )

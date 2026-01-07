@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,26 +10,24 @@ import {
 export default function Header() {
   const navItems = [
     { label: 'Accueil', href: '/' },
-    { label: 'Réalisations', href: '#realisations' },
-    // Renamed 'Tarifs' to 'Nos Offres' and adding a flag for special styling
-    { label: 'Nos Offres', href: '#tarifs', isSpecial: true },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Réalisations', href: '/#realisations' },
+    { label: 'Nos Offres', href: '/#tarifs', isSpecial: true },
+    { label: 'Contact', href: '/#contact' },
   ]
 
   return (
-    // Added backdrop-blur-md and bg-waps-black/90 for the "Glass" effect
-    <header className="sticky top-0 z-50 w-full bg-waps-black/90 backdrop-blur-md border-b border-waps-white/10 transition-all">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-waps-black/90 backdrop-blur-md border-b border-waps-white/10 transition-all">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo - Left */}
+          {/* Logo */}
           <Link href="/" className="flex items-center space-x-1 group">
             <span className="text-2xl font-black text-waps-white tracking-tighter">
               WAPS<span className="text-waps-yellow group-hover:animate-pulse">.</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation - Center */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
@@ -52,16 +49,17 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Button - Right */}
+          {/* CTA & Mobile Menu */}
           <div className="flex items-center space-x-4">
+            {/* UPDATED: Link points to /commencer */}
             <Button
               asChild
               className="hidden lg:inline-flex bg-waps-yellow text-waps-black hover:bg-waps-white hover:text-waps-black font-bold px-6 shadow-[0_0_15px_rgba(255,204,0,0.2)]"
             >
-              <Link href="#contact">LANCER MON PROJET</Link>
+              <Link href="/commencer">LANCER MON PROJET</Link>
             </Button>
 
-            {/* Mobile Menu */}
+            {/* Mobile Trigger */}
             <Sheet>
               <SheetTrigger asChild className="lg:hidden">
                 <Button variant="ghost" size="icon" className="text-waps-white hover:bg-waps-white/10">
@@ -69,7 +67,7 @@ export default function Header() {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-waps-black border-l border-waps-white/10 w-[300px]">
+              <SheetContent side="right" className="bg-waps-black border-l border-waps-white/10 w-[300px] z-[60]">
                 <nav className="flex flex-col space-y-6 mt-12">
                   {navItems.map((item) => (
                     <Link
@@ -81,11 +79,12 @@ export default function Header() {
                     </Link>
                   ))}
                   <div className="pt-8 border-t border-waps-white/10">
+                    {/* UPDATED: Mobile Link also points to /commencer */}
                     <Button
                       asChild
                       className="bg-waps-yellow text-waps-black hover:bg-white font-bold w-full py-6 text-lg"
                     >
-                      <Link href="#contact">LANCER MON PROJET</Link>
+                      <Link href="/commencer">LANCER MON PROJET</Link>
                     </Button>
                   </div>
                 </nav>
