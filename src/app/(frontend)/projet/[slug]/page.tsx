@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, Calendar, Layers, CheckCircle2, ArrowRight } f
 import { Button } from '@/components/ui/button'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import type { Project, Media } from '@/payload-types' // Ensure this matches your types path
+import type { Project, Media } from '@/payload-types'
 
 // 1. This function tells Next.js to fetch data from Payload
 async function getProject(slug: string): Promise<Project | null> {
@@ -18,15 +18,19 @@ async function getProject(slug: string): Promise<Project | null> {
         equals: slug,
       },
     },
-    limit: 1, // We only expect one project per slug
+    limit: 1,
   })
 
   return result.docs[0] || null
 }
 
-// 2. Main Page Component (Async Server Component)
-export default async function ProjectDetail({ params }: { params: { slug: string } }) {
-  const { slug } = await params
+// 2. Main Page Component - FIX THE TYPE HERE!
+export default async function ProjectDetail({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }>  // ← Changed to Promise<>
+}) {
+  const { slug } = await params  // This line stays the same
   const project = await getProject(slug)
 
   // 404 Handler if slug doesn't exist in DB
@@ -34,7 +38,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
     return notFound()
   }
 
-  // Type helper for Media objects (Payload sometimes returns ID instead of object)
+  // Type helper for Media objects
   const getImageUrl = (media: string | Media | null | undefined) => {
     if (!media || typeof media === 'string') return ''
     return media.url || ''
@@ -53,7 +57,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
       <div className="relative h-[60vh] w-full overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-waps-black via-waps-black/50 to-transparent z-10"></div>
         
-        {/* Background Image (Using the first image from the gallery as hero) */}
+        {/* Background Image */}
         <div className="absolute inset-0 bg-gray-900">
            {project.projectImages && project.projectImages.length > 0 && (
              <Image 
@@ -160,7 +164,6 @@ export default async function ProjectDetail({ params }: { params: { slug: string
           {/* Sticky Mobile Mockup area */}
           <div className="relative bg-gray-900 rounded-3xl border border-white/10 p-8 aspect-square flex items-center justify-center overflow-hidden group">
             <div className="absolute inset-0 bg-waps-yellow/5 group-hover:bg-waps-yellow/10 transition-colors"></div>
-             {/* If there is a second image, assume it's mobile/detail view */}
              {project.projectImages && project.projectImages[1] ? (
                 <div className="relative w-[60%] h-[90%] rotate-[-5deg] group-hover:rotate-0 transition-transform duration-500 shadow-2xl rounded-2xl overflow-hidden border-4 border-gray-800">
                    <Image 
@@ -178,7 +181,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
         </div>
       </div>
 
-      {/* 4. GALLERY (Dynamic) */}
+      {/* 4. GALLERY */}
       {project.projectImages && project.projectImages.length > 0 && (
         <div className="bg-white text-black py-24">
           <div className="container mx-auto px-4">
@@ -204,7 +207,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
         </div>
       )}
 
-      {/* 5. NEXT STEPS CTA */}
+      {/* 5. CTA */}
       <div className="bg-waps-yellow py-20 text-center text-black">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-black uppercase mb-6">
