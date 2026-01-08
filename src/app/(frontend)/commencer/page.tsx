@@ -6,7 +6,7 @@ import {
   Building2, Palette, PenTool, Globe, FileText, Loader2, MessageCircle, AlertCircle, Plus 
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils' // Assuming you have a utils file, or just use template literals
+import { cn } from '@/lib/utils'
 
 const steps = [
   { id: 1, title: "L'Entreprise", icon: Building2 },
@@ -102,7 +102,7 @@ export default function StartProject() {
       <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
         
         {/* Header */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 mt-20">
           <h1 className="text-3xl md:text-5xl font-black text-black uppercase mb-4">
             Constructeur de <span className="text-waps-yellow bg-black px-2">Projet.</span>
           </h1>
