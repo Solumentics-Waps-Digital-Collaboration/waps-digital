@@ -10,7 +10,7 @@ import {
 export default function Header() {
   const navItems = [
     { label: 'Accueil', href: '/' },
-    { label: 'Réalisations', href: '/#realisations' },
+    { label: 'Réalisations', href: '/projets' },
     { label: 'Nos Offres', href: '/#tarifs', isSpecial: true },
     { label: 'Contact', href: '/#contact' },
   ]

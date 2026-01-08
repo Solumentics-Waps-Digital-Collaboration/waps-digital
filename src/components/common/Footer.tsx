@@ -34,7 +34,7 @@ export default function Footer() {
             <h4 className="text-waps-white font-bold uppercase tracking-widest text-xs mb-6">Exploration</h4>
             <ul className="space-y-4 text-sm">
               <li>
-                <Link href="#realisations" className="text-waps-gray hover:text-waps-yellow transition-colors">
+                <Link href="/projets" className="text-waps-gray hover:text-waps-yellow transition-colors">
                   Nos Réalisations
                 </Link>
               </li>
